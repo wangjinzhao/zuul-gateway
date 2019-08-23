@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: zuul-gateway
+  security:
+    user:
+      name: admin
+      password: admin
+      role: USER,ADMIN
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://admin:admin@peer1:8761/eureka/,http://admin:admin@peer2:8762/eureka/
+  instance:
+    prefer-ip-address: true # 优先注册IP地址而不是hostname
+
+#  healthcheck:
+#      enabled: true # 启用健康检查,注意:需要引用spring boot actuator
+
+
+
+#特定的路由配置
+#zuul:
+#  prefix: /api # 路由前缀
+#  #ignored-services: * # 忽略所有微服务
+#  #ignored-services: movie-service # 忽略指定服务
+#  #sensitive-headers: Cookie,Set-Cookie,Authorization # 指定全局敏感header，默认是Cooki,Set-Cookie,Authorization
+#  routes:
+#    user-service: /user/**
+#    movie-service: /movie/**
+
+# 下面的设置针对超大文件上传（比如500M），提升了超时设置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMillseconds: 60000
+
+ribbon:
+  ConnectionTimeout: 3000
+  ReadTimeout: 60000
+
