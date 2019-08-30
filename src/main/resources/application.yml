@@ -44,4 +44,3 @@ hystrix:
 ribbon:
   ConnectionTimeout: 3000
   ReadTimeout: 60000
-
